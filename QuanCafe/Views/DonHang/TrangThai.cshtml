@@ -1,0 +1,21 @@
+﻿@model QuanCafe.Models.Donhang
+
+<meta http-equiv="refresh" content="5" />
+
+<h3>Mã đơn: @Model.Madonhang</h3>
+<p>Trạng thái đơn: <b>@Model.Trangthai</b></p>
+<p>Thanh toán: <b>@Model.Trangthaithanhtoan</b></p>
+
+<ul>
+    @foreach (var ct in Model.Chitietdons)
+    {
+        <li>@ct.IdsanphamNavigation.Tensanpham x @ct.Soluong — @ct.Trangthai</li>
+    }
+</ul>
+
+@if (Model.Trangthaithanhtoan == "chuathanhtoan")
+{
+    <a class="btn btn-success" asp-action="ThanhToanCuoi" asp-controller="ThanhToan">
+        Dùng xong, thanh toán
+    </a>
+}
