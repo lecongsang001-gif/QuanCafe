@@ -7,7 +7,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDistributedMemoryCache(); // bắt buộc phải có, Session cần cache để lưu dữ liệu
-builder.Services.AddSession();                 // đăng ký Session service
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(3);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 var app = builder.Build() ;
 
 // Configure the HTTP request pipeline.
@@ -27,7 +32,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Menu}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 
